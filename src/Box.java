@@ -29,13 +29,9 @@ public class Box<T extends Fruit> {
     public double getWeight() {
         double weight = 0;
 
-        for (Object fruit : fruits) {
-            if (fruit.getClass().equals(Apple.class)) {
-                weight += 1;
-            } else {
-                weight += 1.5;
+        for (Fruit fruit : fruits) {
+                weight = fruit.getWeight();
             }
-        }
         return weight;
     }
 
@@ -44,11 +40,9 @@ public class Box<T extends Fruit> {
     }
 
     public void merge(Box<?> box) {
-        List fruitsToMerge = box.getFruits();
-        if (fruitsToMerge.get(0).equals(fruits.get(0))) {
-            for (Object fruit : fruitsToMerge) {
-                fruits.add((Fruit) fruit);
-            }
+        List<? extends Fruit> fruitsToMerge = box.getFruits();
+        if (!fruitsToMerge.isEmpty() && fruitsToMerge.get(0).getClass() == fruits.get(0).getClass()) {
+            fruits.addAll(fruitsToMerge);
         }
     }
 }
